@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Res } from '@nestjs/common';
 import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { BitService } from './bit.service';
 import { CreateBitDTO, UpdateBitDTO } from './dto';
@@ -9,16 +9,20 @@ import { FindOneBitDto } from './dto/find-one.dto';
 export class BitController {
     constructor (private readonly service:BitService){}
 
-   @Get()
+   @Get(':username')
    @ApiOkResponse({type:[CreateBitDTO]})
-   async findAll(){
-       return await this.service.findAll()
+   async findAll(
+    @Param('username') username:string) {
+       return await this.service.findAll(username)
     }
-    /*@Get('test')
+    /* @Get('test')
      async test(@Res()res:Response){
-     const url='http://' 
-     //this.service.findUrl()
-     //return res.redirect(url)
+    app.use('/rs', function (request, response) {
+        response.redirect('title')
+          })
+     const url=this.entity.title
+     this.service.findUrl()
+     return res.redirect(url)
     } */
     @Post()
     @ApiCreatedResponse({type:CreateBitDTO})
@@ -33,14 +37,6 @@ export class BitController {
     @Param() params:FindOneBitDto) {
       const {id}=params
      return await this.service.findOne(id)
-    }
-    @Put(':id')
-    @ApiCreatedResponse({type:UpdateBitDTO})
-    @ApiNotFoundResponse()
-    async update(
-    @Param() {id}:FindOneBitDto,
-    @Body() dto:UpdateBitDTO) {
-     return await this.service.update(id,dto)
     }
 
     @Delete(':id')

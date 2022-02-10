@@ -1,4 +1,5 @@
 export class CreateBitDTO {
   title: string;
-  id: string;
+  username:string;
+  short:string;
 }

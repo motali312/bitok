@@ -8,6 +8,16 @@ export class BitEntity implements IBit {
     required: true,
   })
   title: string;
+  @Prop({
+    type:String,
+    required:true,
+  })
+  short:string;
+  @Prop({
+    type:String,
+    required:true,
+  })
+  username:string
 
 }
 

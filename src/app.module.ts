@@ -4,7 +4,7 @@ import { BitModule } from './bit/bit.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/bit-ly', { useNewUrlParser: true }),
+    MongooseModule.forRoot('mongodb+srv://admin:admin@cluster0.0jjim.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'),
     BitModule,
   ],
   controllers: [],

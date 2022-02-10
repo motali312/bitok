@@ -7,9 +7,5 @@ import { CreateBitDTO } from './bit/dto';
 export class AppController {
   constructor(private readonly service: BitService) {}
 
-  @Get()
-  @ApiOkResponse({ type: [CreateBitDTO] })
-  async findAll() {
-    return await this.service.findAll()
-  }
+
 }

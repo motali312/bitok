@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateBitDTO, UpdateBitDTO } from './dto';
 import { BitEntity } from './entity';
+import * as randomstring from 'randomstring'
 
 @Injectable()
 export class BitService {
@@ -12,19 +13,26 @@ export class BitService {
     private readonly entity: Model<BitEntity>,
   ) {}
 
-  async findAll() {
-    return await this.entity.find(
-      // { date: { $gt: new Date }},
-     // null,
-    )
+  async findAll(username:string) {
+    return await this.entity.find({username})
   }
   async create(dto:CreateBitDTO){
     const {title}=dto
-    const exist =await this.entity.findOne({title})
+    const {username}=dto
+    const exist =await this.entity.findOne({title,username})
     console.log(exist)
     if (exist){
         throw new ConflictException()
     }
+
+  
+    const short=randomstring.generate({
+      length: 8,
+      charset: 'alphabetic'
+    });
+    
+    dto.username=username
+    dto.short=short
     return await this.entity.create(dto)
   }
   async findOne(id:string ){
@@ -34,11 +42,8 @@ export class BitService {
     }
     return bit
   }
-  async update(id:string,dto:UpdateBitDTO){
-    const bit = await this.findOne(id)
-    Object.assign(bit,dto)
-    return await bit.save()
-  }
+ 
+  
   async delete(id:string){
     await this.findOne(id)
     await this.entity.findByIdAndDelete(id)
