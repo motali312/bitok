@@ -18,6 +18,11 @@ export class BitEntity implements IBit {
     required:true,
   })
   username:string
+  @Prop({
+    type:Number,
+    required:false,
+  })
+  visitcounter:number
 
 }
 

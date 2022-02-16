@@ -1,4 +1,6 @@
 export interface IBit {
   id?: string,
-  title: string
+  title: string,
+  short:string,
+  visitcounter?:number
 }
